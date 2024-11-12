@@ -75,5 +75,10 @@ if __name__ == "__main__":
         upload_folder(folder_path, target_directory)
     else:
         print("No folder path provided.")
-
+    if len(sys.argv == 1):
+        folder_path = sys.argv[1]
+        upload_folder(folder_path, target_directory)
+    else:
+        print("No Image Provided")
+        
 
