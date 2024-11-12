@@ -1,6 +1,6 @@
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.optim as optim
+import torch.nn as nn # type: ignore
+import torch.nn.functional as F # type: ignore
+import torch.optim as optim # type: ignore
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
@@ -11,7 +11,7 @@ class Net(nn.Module):
         self.fc2 = nn.Linear(520, 2)
 
 
-    def forward(self):
+    def forward(self, x):
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(F.relu(self.conv2(x)))
         x = torch.flatten(x, 1)
@@ -21,4 +21,4 @@ class Net(nn.Module):
 
 CNN_model = Net()
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.SGD(CNN_model.parameters())
+optimizer = optim.SGD(CNN_model.parameters(), lr=0.01)
