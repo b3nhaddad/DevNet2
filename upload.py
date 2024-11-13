@@ -1,10 +1,11 @@
+print("upload works")
 import sys
 import shutil
 import os
-import numpy as np # type: ignore
-from PIL import Image # type: ignore
-import torch # type: ignore
-from setup import Net  # type: ignore
+import numpy as np 
+from PIL import Image 
+import torch
+from setup import Net 
 # Import the CNN model from setup.py
 # Instantiate the model and set it to evaluation mode
 CNN_model = Net()
