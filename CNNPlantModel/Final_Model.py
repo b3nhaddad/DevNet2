@@ -21,7 +21,7 @@ CNN_model.fc = nn.Linear(num_features, 2)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 CNN_model = CNN_model.to(device)
 
-model_path = '/Users/henry/Desktop/CNNPlantModel/cnn_model_weights.pth'
+model_path = 'PUT_PATH_TO/cnn_model_weights.pth'
 CNN_model.load_state_dict(torch.load(model_path, map_location=device))
 
 CNN_model.eval()
