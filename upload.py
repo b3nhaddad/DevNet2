@@ -1,17 +1,15 @@
-print("upload works")
 import sys
-import shutil
 import os
-import numpy as np 
-from PIL import Image 
+import requests
+from PIL import Image
 import torch
-from setup import Net 
-# Import the CNN model from setup.py
-# Instantiate the model and set it to evaluation mode
+import numpy as np
+from setup import Net
+
+# Load the CNN model
 CNN_model = Net()
 CNN_model.eval()
 
-# Function to standardize the image
 def standardize_image(image_path):
     image = Image.open(image_path).convert("RGB")
     img_array = np.array(image)
@@ -22,62 +20,52 @@ def standardize_image(image_path):
     standardized_img = Image.fromarray((standardized_img * 255).astype(np.uint8))
     return standardized_img
 
-# Function to classify the standardized image
 def classify_image(image_path):
     image = Image.open(image_path).convert("RGB")
-    image_tensor = transform_image_for_model(image)  # Transform for model input
+    image_tensor = transform_image_for_model(image)
     with torch.no_grad():
-        output = CNN_model(image_tensor)  # Correct way to call the model
+        output = CNN_model(image_tensor)
         _, predicted = torch.max(output, 1)
         label = "healthy" if predicted.item() == 0 else "unhealthy"
     return label
 
-# Preprocessing: Convert the PIL image to a tensor for the model
 def transform_image_for_model(image):
-    image = image.resize((32, 32))  # Adjust size as required by the model
-    image = np.array(image).transpose((2, 0, 1))  # Rearrange to CxHxW
+    image = image.resize((32, 32))  # Adjust as per model input size
+    image = np.array(image).transpose((2, 0, 1))  # Convert to CxHxW
     image_tensor = torch.tensor(image, dtype=torch.float32).unsqueeze(0) / 255.0  # Add batch dimension
     return image_tensor
 
-
-# Function to handle file upload and processing
-# Function to handle file upload and processing
-def upload_file(file_path, target_directory):
-    if not os.path.exists(target_directory):
-        os.makedirs(target_directory)
-    
-    target_path = os.path.join(target_directory, os.path.basename(file_path))
-    
-    # Check if source and destination are the same
-    if os.path.abspath(file_path) == os.path.abspath(target_path):
-        print(f"Source and target paths are the same: {file_path}")
+def send_classification_to_php(image_path, classification):
+    # Send the classification result to a PHP script via POST
+    php_url = "https://cs.colostate.edu/~bshaddad/uploadpy.php"  # URL of the PHP script
+    data = {
+        'image_path': image_path,
+        'classification': classification  # Include classification result
+    }
+    response = requests.post(php_url, data=data)
+    if response.status_code == 200:
+        print("Successfully sent classification to PHP.")
     else:
-        shutil.copy(file_path, target_path)  # Use copy instead of move if needed
-    
-    # Standardize and classify
-    standardized_image = standardize_image(target_path)
-    standardized_image.save(target_path)
-    print(f"Image standardized and saved to {target_path}")
+        print("Failed to send classification to PHP.")
 
-    # Classify image
-    classification = classify_image(target_path)
-    print(f"Image classified as: {classification}")
-
-# Process all images in a folder
-def upload_folder(folder_path, target_directory):
-    if os.path.isdir(folder_path):
-        for filename in os.listdir(folder_path):
-            file_path = os.path.join(folder_path, filename)
-            if os.path.isfile(file_path):
-                upload_file(file_path, target_directory)
-    else:
-        print(f"Folder '{folder_path}' does not exist.", file=sys.stderr)
-
-# Main
-if __name__ == "__main__":
+def main():
     if len(sys.argv) > 1:
-        folder_path = sys.argv[1]
-        target_directory = "/s/parsons/g/under/bshaddad/public_html/uploads"
-        upload_file(folder_path, target_directory)
+        image_path = sys.argv[1]  # Get image path from command line argument
+        print(f"Processing image: {image_path}")
+        
+        if os.path.exists(image_path):
+            # Standardize and classify the image
+            standardized_image = standardize_image(image_path)
+            standardized_image.save(image_path)  # Save standardized image
+            classification = classify_image(image_path)
+            print(f"Image classified as: {classification}")
+            
+            # Send classification result to PHP
+            send_classification_to_php(image_path, classification)
+        else:
+            print(f"Image file '{image_path}' does not exist.")
     else:
-        print("No folder path provided.", file=sys.stderr)
+        print("No image path provided.")
+
+if __name__ == "__main__":
+    main()
