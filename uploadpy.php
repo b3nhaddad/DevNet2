@@ -27,7 +27,7 @@ if (!in_array($imageFileType, $allowed_types)) {
 if ($uploadOk == 1) {
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
         // Execute the Python script with error capture
-        $command = "python3 /s/bach/l/under/carter64/public_html/upload.py " . escapeshellarg($target_file) . " 2>&1";
+        $command = "/usr/local/anaconda3/2022.08/bin/python3.9 /s/bach/l/under/carter64/public_html/upload.py " . escapeshellarg($target_file) . " 2>&1";
         $output = shell_exec($command);
         
         if ($output) {
