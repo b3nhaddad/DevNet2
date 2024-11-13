@@ -29,7 +29,7 @@ def classify_image(image_path):
     with torch.no_grad():
         output = CNN_model(image_tensor)  # Correct way to call the model
         _, predicted = torch.max(output, 1)
-        label = "healthy" if predicted.item() == 0 else "unhealthy"
+        label = "Healthy" if predicted.item() == 0 else "Unhealthy"
     return label
 
 # Preprocessing: Convert the PIL image to a tensor for the model
