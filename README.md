@@ -17,3 +17,8 @@ This data is then converted back to type Image (as defined by Pillow) and sent t
 
 Our PHP code simply connects our "public" (on the CSU network) website (HTML) with our python files in the directory and communicates the results of our python code.
 The data is then relayed to HTML Format where it is presented as healthy or unhealthy along with the excel files
+
+To access our project: download our zip file onto a computer in the CS
+make sure the packages are downloaded for the python files
+replace the links with "/s/parsons/g/under/bshaddad/public_html/uploads" with the nessecary path 
+https://cs.colostate.edu/~bshaddad/HealthyPlantChecker.html
