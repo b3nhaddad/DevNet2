@@ -61,14 +61,15 @@
             margin-bottom: 20px;
         }
         .image-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            display: flex;
+            flex-direction: column;
             gap: 20px;
-            justify-items: center;
+            align-items: center;
         }
-        /* Center last row by leaving first column empty */
-        .image-grid .spacer {
-            grid-column: 1 / 2;
+        .image-row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
         }
         .image-item {
             display: flex;
@@ -76,10 +77,11 @@
             align-items: center;
         }
         .image-grid img {
-            width: 100%;
-            max-width: 400px;
+            width: 400px; /* Fixed width */
+            height: 225px; /* Fixed height */
             border-radius: 8px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            /* object-fit: cover; /* Ensures images are scaled to fit within the set width and height */
         }
         .image-caption {
             margin-top: 8px;
@@ -93,7 +95,7 @@
     <h1>Healthy Plant Checker</h1>
 
     <div class="form-container">
-        <form id="uploadForm">
+        <form id="uploadForm" action="uploadpy.php" method="post" enctype="multipart/form-data">
             <label for="fileToUpload">Choose a plant leaf image:</label>
             <input type="file" name="fileToUpload" id="fileToUpload" class="file-input" required>
             <button type="submit" class="submit-btn">Check Health</button>
@@ -105,28 +107,31 @@
     <div class="gallery-container">
         <h2>Sensor Data Graphs</h2>
         <div class="image-grid">
-            <!-- First row -->
-            <div class="image-item">
-                <img src="sensor_data_images/EC.png" alt="EC Graph">
-                <div class="image-caption">EC Graph</div>
+            <!-- Top row with three images -->
+            <div class="image-row">
+                <div class="image-item">
+                    <img src="sensor_data_images/EC2.png" alt="EC Graph">
+                    <div class="image-caption">EC Graph</div>
+                </div>
+                <div class="image-item">
+                    <img src="sensor_data_images/Humidy2.png" alt="Humidity Graph">
+                    <div class="image-caption">Humidity Graph</div>
+                </div>
+                <div class="image-item">
+                    <img src="sensor_data_images/PPM2.png" alt="PPM Graph">
+                    <div class="image-caption">PPM Graph</div>
+                </div>
             </div>
-            <div class="image-item">
-                <img src="sensor_data_images/Humidy.png" alt="Humidity Graph">
-                <div class="image-caption">Humidity Graph</div>
-            </div>
-            <div class="image-item">
-                <img src="sensor_data_images/PPM.png" alt="PPM Graph">
-                <div class="image-caption">PPM Graph</div>
-            </div>
-            <!-- Second row with centered images -->
-            <div class="spacer"></div> <!-- Empty spacer to center next two images -->
-            <div class="image-item">
-                <img src="sensor_data_images/Temp.png" alt="Temperature Graph">
-                <div class="image-caption">Temperature Graph</div>
-            </div>
-            <div class="image-item">
-                <img src="sensor_data_images/pH.png" alt="Date & pH Graph">
-                <div class="image-caption">Date & pH Graph</div>
+            <!-- Bottom row with two centered images -->
+            <div class="image-row">
+                <div class="image-item" style="margin-right: 80px;"> <!-- Center the first image between top images -->
+                    <img src="sensor_data_images/Temp2.png" alt="Temperature Graph">
+                    <div class="image-caption">Temperature Graph</div>
+                </div>
+                <div class="image-item" style="margin-left: 80px;"> <!-- Center the second image between top images -->
+                    <img src="sensor_data_images/pH2.png" alt="Date & pH Graph">
+                    <div class="image-caption">Date & pH Graph</div>
+                </div>
             </div>
         </div>
     </div>
