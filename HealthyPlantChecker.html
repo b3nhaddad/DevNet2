@@ -3,15 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Upload</title>
+    <title>Healthy Plant Checker</title>
+    <style>
+        /* Centering everything and setting a calming background color */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f8f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            justify-content: center;
+        }
+
+        /* Title Styling */
+        h1 {
+            color: #4CAF50;
+            font-size: 2em;
+        }
+
+        /* Form container styling with shadow and border */
+        .form-container {
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 400px;
+            background-color: #fff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Styling the label and input file chooser */
+        .form-container label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Input field adjustments */
+        .file-input {
+            display: block;
+            margin: 15px auto;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            max-width: 100%;
+        }
+
+        /* Upload button styling */
+        .submit-btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+        
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Result message styling */
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-    <h1>Upload an Image</h1>
-    <form action="uploadpy.php" method="post" enctype="multipart/form-data">
-    
-        <label for="image">Choose an image to upload:</label>
-        <input type="file" name="fileToUpload" id="fileToUpload" required>
-        <input type="submit" value="Upload Image" name="submit">
-    </form>
+    <h1>Healthy Plant Checker</h1>
+
+    <div class="form-container">
+        <form id="uploadForm">
+            <label for="fileToUpload">Choose a plant leaf image:</label>
+            <input type="file" name="fileToUpload" id="fileToUpload" class="file-input" required>
+            <button type="submit" class="submit-btn">Check Health</button>
+        </form>
+        <div class="result"></div>
+    </div>
+
+    <!-- Link to external JavaScript file for AJAX functionality -->
+    <script src="upload.js"></script>
 </body>
 </html>
