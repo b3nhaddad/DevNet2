@@ -23,6 +23,7 @@ if (!in_array($imageFileType, $allowed_types)) {
 
 // Move the file and process with Python if upload is successful
 if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+    //must be in python 3.9
     $command = "/usr/local/anaconda3/2022.08/bin/python3.9 /s/bach/l/under/carter64/public_html/upload.py " . escapeshellarg($target_file) . " 2>&1";
     $output = shell_exec($command);
 
