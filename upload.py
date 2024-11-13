@@ -10,17 +10,18 @@ from setup import Net
 CNN_model = Net()
 CNN_model.eval()
 
+
 # Function to standardize the image
 def standardize_image(image_path):
-    image = Image.open(image_path).convert("RGB")
+    image = Image.open(image_path).convert("RGB") #changes the color of the image
     img_array = np.array(image)
     mean = np.mean(img_array, axis=(0, 1))
     std = np.std(img_array, axis=(0, 1))
     standardized_img = (img_array - mean) / std
-    standardized_img = np.clip(standardized_img, 0, 1)
+    standardized_img = np.clip(standardized_img, 0, 1) #smooths image over 0 to 1
     standardized_img = Image.fromarray((standardized_img * 255).astype(np.uint8))
     return standardized_img
-
+#makes sure he image is standardized (in color, size, resolution )
 # Function to classify the standardized image
 def classify_image(image_path):
     image = Image.open(image_path).convert("RGB")
@@ -54,12 +55,14 @@ def upload_file(file_path, target_directory):
         shutil.copy(file_path, target_path)  # Use copy instead of move if needed
     
     # Standardize and classify
+    #the restandardization is needed to be properly classified
     standardized_image = standardize_image(target_path)
     standardized_image.save(target_path)
     print(f"Image standardized and saved to {target_path}")
 
     # Classify image
     classification = classify_image(target_path)
+    #since this is a binary model classification is either healthy or unhealthy
     print(f"Image classified as: {classification}")
 
 # Process all images in a folder
@@ -76,7 +79,10 @@ def upload_folder(folder_path, target_directory):
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         folder_path = sys.argv[1]
-        target_directory = "/s/bach/l/under/carter64/public_html/uploads"
+        target_directory = "/s/parsons/g/under/bshaddad/public_html/uploads"
         upload_file(folder_path, target_directory)
     else:
         print("No folder path provided.", file=sys.stderr)
+
+
+
