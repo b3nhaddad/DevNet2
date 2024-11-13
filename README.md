@@ -23,3 +23,7 @@ make sure the packages are downloaded for the python files (torch, numpy,etc.)
 replace the links with "/s/parsons/g/under/bshaddad/public_html/uploads" with the nessecary path for yourself
 "https://cs.colostate.edu/~ yournamehere /HealthyPlantChecker.html"
 Once this is done give permissions to file using chmod 755 for the folder "public_html"
+and if your computer/IDE isn't running on python 3.9 use this command
+'module load python/bundle-3.9'
+from here you should be able to access the website through the folder and select images you place in the 'uploads' folder
+the site will generate wether an image is healthy or unhealthy based on our model
