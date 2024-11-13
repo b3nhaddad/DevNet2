@@ -19,6 +19,7 @@ Our PHP code simply connects our "public" (on the CSU network) website (HTML) wi
 The data is then relayed to HTML Format where it is presented as healthy or unhealthy along with the excel files
 
 To access our project: download our zip file onto a computer in the CS Building
-make sure the packages are downloaded for the python files
-replace the links with "/s/parsons/g/under/bshaddad/public_html/uploads" with the nessecary path 
-https://cs.colostate.edu/~bshaddad/HealthyPlantChecker.html
+make sure the packages are downloaded for the python files (torch, numpy,etc.)
+replace the links with "/s/parsons/g/under/bshaddad/public_html/uploads" with the nessecary path for yourself
+"https://cs.colostate.edu/~ yournamehere /HealthyPlantChecker.html"
+Once this is done give permissions to file using chmod 755 for the folder "public_html"
