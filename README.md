@@ -4,6 +4,6 @@ This is the second Dev Net Project
 Benjamin Haddad, Carter Hickerson, Henry Gates
 
 
-\n To run the program we must load the Python 3.9 module on the computer lab computers
-
+Our model is stored in a python utilizing the torch extension as a neural network builder
+We trained our project on a 
 
