@@ -15,3 +15,4 @@ Then we convert the image to an array using Numpy (np.array) in order to be able
 The clip function done to the array means each individual pixel must be between zero and one to not give any crazy result while being smoothed.
 This data is then converted back to type Image (as defined by Pillow) and sent to the model "setup.py" for analyzation
 
+Our PHP code simply connects our "public" (on the CSU network) website (HTML) with our python files in the directory and communicates the results of our code.
