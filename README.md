@@ -12,3 +12,6 @@ Once this is done you can change the images in the uploads folder to match the i
 Our Model was trained on 
 Our standardizer uses images from Pillow (the python image package) to look a specified image_path using the filePath and gives it three color channels (RGB)
 Then we convert the image to an array using Numpy (np.array) in order to be able to standardize the images with numbers only
+The clip function done to the array means each individual pixel must be between zero and one to not give any crazy result while being smoothed.
+This data is then converted back to type Image (as defined by Pillow) and sent to the model "setup.py" for analyzation
+
