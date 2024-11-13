@@ -1,0 +1,30 @@
+CNN_model = Net()
+CNN_model.eval()
+
+# Function to standardize the image
+def standardize_image(image_path):
+    image = Image.open(image_path).convert("RGB")  # Changes the color of the image
+    img_array = np.array(image)
+    mean = np.mean(img_array, axis=(0, 1))
+    std = np.std(img_array, axis=(0, 1))
+    standardized_img = (img_array - mean) / std
+    standardized_img = np.clip(standardized_img, 0, 1)  # Smooths image over 0 to 1
+    standardized_img = Image.fromarray((standardized_img * 255).astype(np.uint8))
+    return standardized_img
+
+# Function to classify the standardized image
+def classify_image(image_path):
+    image = Image.open(image_path).convert("RGB")
+    image_tensor = transform_image_for_model(image)  # Transform for model input
+    with torch.no_grad():
+        output = CNN_model(image_tensor)  # Correct way to call the model
+        _, predicted = torch.max(output, 1)
+        label = "healthy" if predicted.item() == 0 else "unhealthy"
+    return label
+
+# Preprocessing: Convert the PIL image to a tensor for the model
+def transform_image_for_model(image):
+    image = image.resize((32, 32))  # Adjust size as required by the model
+    image = np.array(image).transpose((2, 0, 1))  # Rearrange to CxHxW
+    image_tensor = torch.tensor(image, dtype=torch.float32).unsqueeze(0) / 255.0  # Add batch dimension
+    return image_tensor
